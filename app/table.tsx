@@ -5,7 +5,6 @@ import {
   TableHeaderCell,
   TableBody,
   TableCell,
-  Text
 } from '@tremor/react';
 
 interface User {
@@ -14,27 +13,38 @@ interface User {
   username: string;
   email: string;
 }
-
-export default function UsersTable({ users }: { users: User[] }) {
+interface Maatmens {
+  nummer: number,
+  status: string,
+  leeftijd: number,
+  ftsalaris: number,
+  op: number,
+  vermogeninvarenfpr: number,
+  vermogeninvarenspr: number,
+  vervangingsratioaanvang: number
+}
+export default function UsersTable({ maatmensen }: { maatmensen: Maatmens[] }) {
   return (
     <Table>
       <TableHead>
         <TableRow>
-          <TableHeaderCell>Name</TableHeaderCell>
-          <TableHeaderCell>Username</TableHeaderCell>
-          <TableHeaderCell>Email</TableHeaderCell>
+          <TableHeaderCell>Leeftijd</TableHeaderCell>
+          <TableHeaderCell>Status</TableHeaderCell>
+          <TableHeaderCell>op</TableHeaderCell>
+          <TableHeaderCell>Salaris</TableHeaderCell>
+          <TableHeaderCell>Invaarvermogen</TableHeaderCell>
+          <TableHeaderCell>VVR aanvang</TableHeaderCell>
         </TableRow>
       </TableHead>
       <TableBody>
-        {users.map((user) => (
-          <TableRow key={user.id}>
-            <TableCell>{user.name}</TableCell>
-            <TableCell>
-              <Text>{user.username}</Text>
-            </TableCell>
-            <TableCell>
-              <Text>{user.email}</Text>
-            </TableCell>
+        {maatmensen.map((user) => (
+          <TableRow key={user.nummer}>
+            <TableCell>{user.leeftijd}</TableCell>
+            <TableCell>{user.status}</TableCell>
+            <TableCell>€{user.ftsalaris}</TableCell>
+            <TableCell>€{user.op}</TableCell>
+            <TableCell>€{user.vermogeninvarenspr}</TableCell>
+            <TableCell>{user.vervangingsratioaanvang}%</TableCell>
           </TableRow>
         ))}
       </TableBody>

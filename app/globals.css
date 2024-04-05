@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.custom-timeline {
+    padding: 20px; /* Adjust the padding to increase or decrease spacing between timeline items */
+  }
+  
+  .custom-timeline-item {
+    display: flex;
+    align-items: flex-start; /* Align items at the top */
+    margin-bottom: 20px; /* Adjust the margin to increase or decrease spacing between timeline items */
+  }
+  
+  .custom-timeline-point {
+    margin-right: 10px; /* Adjust the margin to create space between the point and the content */
+    align-self: flex-start; /* Align the point at the top */
+  }
+  
+  .custom-timeline-content {
+    flex-grow: 1; /* Allow content to grow and occupy remaining space */
+  }
+  
+  .custom-timeline-time {
+    margin-top: 5px; /* Add some space between date and large text */
+  }
+  

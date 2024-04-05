@@ -8,8 +8,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
+    "@mui/core": "^5.0.0-alpha.54",
+    "@mui/material": "^5.15.15",
     "@tremor/react": "^3.10.0",
     "@types/js-cookie": "^3.0.5",
     "@types/node": "20.8.9",
@@ -30,7 +34,8 @@
     "react-dom": "18.2.0",
     "server-only": "^0.0.1",
     "tailwindcss": "^3.3.5",
-    "typescript": "5.2.2"
+    "typescript": "5.2.2",
+    "xlsx": "^0.18.5"
   },
   "prettier": {
     "arrowParens": "always",
