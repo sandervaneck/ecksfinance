@@ -12,7 +12,7 @@ import {
   TextField
 } from '@mui/material';
 
-export const createRange = (start: number, end: number): number[] =>
+const createRange = (start: number, end: number): number[] =>
   Array.from({ length: end - start }, (v, k) => k + start);
 
 interface StockData {
