@@ -24,18 +24,24 @@ const TableRows = ({
   return (
     <>
       <TableRow>
-        {filteredInvestments.map((investment, index) => (
-          <Row
-            key={index}
-            setInvestmentData={setInvestmentData}
-            edit={edit}
-            amounts={amounts}
-            investmentData={investmentData}
-            index={index}
-            investment={investment}
-            setEdit={setEdit}
-          />
-        ))}
+        {filteredInvestments.map((investment, index) => {
+          const i = investmentData.investments
+            .map((i) => i.year)
+            .indexOf(investment.year);
+          return (
+            <Row
+              key={i}
+              i={i}
+              setInvestmentData={setInvestmentData}
+              edit={edit}
+              amounts={amounts}
+              investmentData={investmentData}
+              index={index}
+              investment={investment}
+              setEdit={setEdit}
+            />
+          );
+        })}
       </TableRow>
     </>
   );
@@ -52,8 +58,10 @@ interface RowsProps {
   setEdit: (n: number | null) => void;
   setInvestmentData: (i: InvestmentData) => void;
   amounts: number[];
+  i: number;
 }
 const Row: React.FC<RowsProps> = ({
+  i,
   edit,
   setInvestmentData,
   setEdit,
@@ -69,6 +77,7 @@ const Row: React.FC<RowsProps> = ({
       <TableCell key={index} style={{ cursor: 'pointer' }}>
         {investment.year}:
         <Autocomplete
+          key={index}
           options={amounts.map((a) => String(a))}
           getOptionLabel={(option) => `${String(option)}`}
           loading={amounts.length === 0}
