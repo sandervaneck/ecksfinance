@@ -1,4 +1,4 @@
-import { MenuItem, Select, Grid, Card, Box, Stack } from '@mui/material';
+import { MenuItem, Select, Box, Stack } from '@mui/material';
 import { Box1Props } from '../../../types';
 
 export const SelectTicker: React.FC<Box1Props> = ({ item, setItem }) => {
@@ -18,6 +18,9 @@ export const SelectTicker: React.FC<Box1Props> = ({ item, setItem }) => {
           </MenuItem>
           <MenuItem key="BTC" value="BTC">
             Bitcoin
+          </MenuItem>
+          <MenuItem key="GSP" value="GSP">
+            S&P 500
           </MenuItem>
         </Select>
       </Stack>

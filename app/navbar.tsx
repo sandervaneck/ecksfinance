@@ -7,14 +7,15 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
 const navigation = [
   { name: 'Home', href: '/' },
-  { name: 'Stocks', href: '/stocks' }
+  { name: 'Stocks', href: '/stocks' },
+  { name: 'Learn about Stocks', href: '/learn' },
+  { name: 'Predict Stock return', href: '/predict' }
 ];
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-// export default function Navbar({ user }: { user: any }) {
 export default function Navbar() {
   const pathname = usePathname();
 

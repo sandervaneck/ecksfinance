@@ -12,6 +12,21 @@ interface TotalCardProps {
   setChanged: (b: boolean) => void;
 }
 
+const getData = (item: string): string => {
+  let result;
+  switch (true) {
+    case item === 'BTC':
+      result = '/btc.xlsx';
+      break;
+    case item === 'GSP':
+      result = '/gsp.xlsx';
+      break;
+    default:
+      result = '/stocks.xlsx';
+  }
+
+  return result;
+};
 export const TotalCard: React.FC<TotalCardProps> = ({
   investmentData,
   item,
@@ -29,7 +44,7 @@ export const TotalCard: React.FC<TotalCardProps> = ({
 
   const parseData = async () => {
     try {
-      const path = item === 'BTC' ? '/btc.xlsx' : '/stocks.xlsx';
+      const path = getData(item);
       const response = await fetch(path);
       const blob = await response.blob();
       const reader = new FileReader();

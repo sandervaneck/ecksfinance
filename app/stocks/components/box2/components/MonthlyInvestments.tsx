@@ -1,6 +1,6 @@
-import { Autocomplete, Table, TableCell, TextField } from '@mui/material';
+import { Autocomplete, TableCell, TextField } from '@mui/material';
 import { Box2Props, InvestmentData } from '../../../types';
-import { TableBody, TableHead, TableRow } from '@tremor/react';
+import { TableBody, TableRow } from '@tremor/react';
 import EditIcon from '@mui/icons-material/Edit';
 import { useState } from 'react';
 import { createRange } from '../../functions';
@@ -89,10 +89,14 @@ const Row: React.FC<RowsProps> = ({
           onChange={(event: any, newValue: string | null) => {
             const num = newValue ? String(newValue.replace('€', '')) : '';
             const old = [...investmentData.investments];
-            old[index] = {
-              ...old[index],
-              monthlyInvestment: Number(num)
-            };
+            const range = createRange(i, investmentData.investments.length - 1);
+            range.forEach((r) => {
+              old[r] = {
+                ...old[r],
+                monthlyInvestment: Number(num)
+              };
+            });
+
             newValue &&
               setInvestmentData({
                 ...investmentData,
@@ -113,7 +117,7 @@ const Row: React.FC<RowsProps> = ({
     </TableCell>
   );
 };
-
+const width = 5;
 export const MonthlyInvestments: React.FC<Box2Props> = ({
   setInvestmentData,
   investmentData
@@ -127,102 +131,93 @@ export const MonthlyInvestments: React.FC<Box2Props> = ({
     (inv, index) =>
       inv.year >= investmentData.startedInvestingYear &&
       inv.year <= investmentData.stoppedInvestingYear &&
-      index <= 9
+      index <= width - 1
   );
   const filteredInvestments2 = filteredInvestments.filter(
     (inv, index) =>
       inv.year >= investmentData.startedInvestingYear &&
       inv.year <= investmentData.stoppedInvestingYear &&
-      index > 9 &&
-      index <= 19
+      index > width - 1 &&
+      index <= 2 * width - 1
   );
   const filteredInvestments3 = filteredInvestments.filter(
     (inv, index) =>
       inv.year >= investmentData.startedInvestingYear &&
       inv.year <= investmentData.stoppedInvestingYear &&
-      index > 19 &&
-      index <= 29
+      index > 2 * width - 1 &&
+      index <= 3 * width - 1
   );
   const filteredInvestments4 = filteredInvestments.filter(
     (inv, index) =>
       inv.year >= investmentData.startedInvestingYear &&
       inv.year <= investmentData.stoppedInvestingYear &&
-      index > 29 &&
-      index <= 39
+      index > 3 * width - 1 &&
+      index <= 4 * width - 1
   );
   const filteredInvestments5 = filteredInvestments.filter(
     (inv, index) =>
       inv.year >= investmentData.startedInvestingYear &&
       inv.year <= investmentData.stoppedInvestingYear &&
-      index > 39 &&
-      index <= 49
+      index > 4 * width - 1 &&
+      index <= 5 * width - 1
   );
   const filteredInvestments6 = filteredInvestments.filter(
     (inv, index) =>
       inv.year >= investmentData.startedInvestingYear &&
       inv.year <= investmentData.stoppedInvestingYear &&
-      index > 49 &&
-      index <= 59
+      index > 5 * width - 1 &&
+      index <= 6 * width - 1
   );
   const filteredInvestments7 = filteredInvestments.filter(
     (inv, index) =>
       inv.year >= investmentData.startedInvestingYear &&
       inv.year <= investmentData.stoppedInvestingYear &&
-      index > 59 &&
-      index <= 69
+      index > 6 * width - 1 &&
+      index <= 7 * width - 1
   );
-
+  const filteredInvestments8 = filteredInvestments.filter(
+    (inv, index) =>
+      inv.year >= investmentData.startedInvestingYear &&
+      inv.year <= investmentData.stoppedInvestingYear &&
+      index > 7 * width - 1 &&
+      index <= 8 * width - 1
+  );
+  const filteredInvestments9 = filteredInvestments.filter(
+    (inv, index) =>
+      inv.year >= investmentData.startedInvestingYear &&
+      inv.year <= investmentData.stoppedInvestingYear &&
+      index > 8 * width - 1 &&
+      index <= 9 * width - 1
+  );
+  const filteredInvestments10 = filteredInvestments.filter(
+    (inv, index) =>
+      inv.year >= investmentData.startedInvestingYear &&
+      inv.year <= investmentData.stoppedInvestingYear &&
+      index > 9 * width - 1 &&
+      index <= 10 * width - 1
+  );
+  const allLists = [
+    filteredInvestments1,
+    filteredInvestments2,
+    filteredInvestments3,
+    filteredInvestments4,
+    filteredInvestments5,
+    filteredInvestments6,
+    filteredInvestments7,
+    filteredInvestments8,
+    filteredInvestments9,
+    filteredInvestments10
+  ];
   return (
-    <Table>
-      <TableHead>
-        <TableRow>
-          <TableCell colSpan={10}>Monthly Investment Amounts:</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
+    <TableBody>
+      {allLists.map((list, j) => (
         <TableRows
-          key={0}
-          filteredInvestments={filteredInvestments1}
+          key={j}
+          filteredInvestments={list}
           setInvestmentData={setInvestmentData}
           investmentData={investmentData}
         />
-        <TableRows
-          key={1}
-          filteredInvestments={filteredInvestments2}
-          setInvestmentData={setInvestmentData}
-          investmentData={investmentData}
-        />
-        <TableRows
-          key={2}
-          filteredInvestments={filteredInvestments3}
-          setInvestmentData={setInvestmentData}
-          investmentData={investmentData}
-        />
-        <TableRows
-          key={3}
-          filteredInvestments={filteredInvestments4}
-          setInvestmentData={setInvestmentData}
-          investmentData={investmentData}
-        />
-        <TableRows
-          key={4}
-          filteredInvestments={filteredInvestments5}
-          setInvestmentData={setInvestmentData}
-          investmentData={investmentData}
-        />
-        <TableRows
-          key={5}
-          filteredInvestments={filteredInvestments6}
-          setInvestmentData={setInvestmentData}
-          investmentData={investmentData}
-        />
-        <TableRows
-          key={6}
-          filteredInvestments={filteredInvestments7}
-          setInvestmentData={setInvestmentData}
-          investmentData={investmentData}
-        />
-      </TableBody>
-    </Table>
+      ))}
+    </TableBody>
   );
 };
