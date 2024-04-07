@@ -8,13 +8,17 @@ interface TotalCardProps {
   setStocks: (s: Stock[]) => void;
   investmentData: InvestmentData;
   item: string;
+  changed: boolean;
+  setChanged: (b: boolean) => void;
 }
 
 export const TotalCard: React.FC<TotalCardProps> = ({
   investmentData,
   item,
   stocks,
-  setStocks
+  setStocks,
+  changed,
+  setChanged
 }) => {
   const [totalInvestmentValue, setTotalInvestmentValue] = useState<
     number | null
@@ -110,7 +114,10 @@ export const TotalCard: React.FC<TotalCardProps> = ({
           <Button
             variant="contained"
             onClick={() => {
-              if (stocks.length === 1) parseData();
+              if (changed || stocks.length <= 1) {
+                parseData();
+                setChanged(!changed);
+              }
               calculateTotalInvestmentValue();
             }}
             style={{ border: 5, color: 'black' }}

@@ -3,9 +3,8 @@
 import React, { useState } from 'react';
 import { Card } from '@tremor/react';
 import { Box, Grid } from '@mui/material';
-import { InvestmentData, Stock, StockData, emptyStock } from './types';
+import { InvestmentData, Stock, emptyStock } from './types';
 import { Box1 } from './components/box1';
-import { createRange } from './components/functions';
 import { Box3 } from './components/box3';
 import { Box2 } from './components/box2';
 
