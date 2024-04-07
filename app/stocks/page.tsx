@@ -21,7 +21,7 @@ const hundredPerYear = (): { year: number; monthlyInvestment: number }[] => {
 };
 
 const startInvestmentData: InvestmentData = {
-  startedInvestingYear: 200,
+  startedInvestingYear: 2000,
   stoppedInvestingYear: 2020,
   yearOfTotalAmount: 2024,
   investments: hundredPerYear()
