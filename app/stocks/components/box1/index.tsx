@@ -1,6 +1,6 @@
 import { Card, Grid } from '@mui/material';
 import { Box1Props, Stock } from '../../types';
-import { SelectTicker } from './components/SelectTicket';
+import { SelectTicker } from './components/SelectTicker';
 import { TotalCard } from './components/TotalInvestmentCard';
 import { useState } from 'react';
 
