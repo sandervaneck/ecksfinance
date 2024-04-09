@@ -25,6 +25,14 @@ export const QuestionCard: React.FC<QuestionFormProps> = ({questions, setQuestio
 const QuestionsStepper: React.FC<QuestionFormProps> = ({questions, setQuestions}) => {
 const [index, setindex] = useState(0)
 const [openAnswer, setOpenAnswer] = useState(false)
+
+    if (index === questions.questions.length - 1) return (
+        <>
+        <Typography variant="subtitle1" align="left"><b>Questions Done: <br/>Score: 
+        {((questions.questions.filter(q => q.answer === q.correctAnswer).length / 6) * 100).toFixed(0)}%
+        </b></Typography>
+        </>
+    )
     return (
         <>
         <QuestionAsked question={questions.questions[index]} questions={questions} setQuestions={setQuestions} index={index}/>
@@ -35,7 +43,7 @@ const [openAnswer, setOpenAnswer] = useState(false)
         <Grid item xs={12}>{openAnswer ? (
         <Button disabled={openAnswer} variant="outlined" onClick={() => setOpenAnswer(!openAnswer)}>See answer</Button>
         ) : (
-            <Typography variant="subtitle1" align="left"><b>Answer: <br/>{`(${index + 1}) ${questions.questions[index].answer}`}</b></Typography>
+            <Typography variant="subtitle1" align="left"><b>Answer: <br/>{`(${index + 1}) ${questions.questions[index].correctAnswer}`}</b></Typography>
            
         )}</Grid>
         <Grid item xs={12}>
