@@ -1,4 +1,4 @@
-import { Grid, Card, Typography, CheckBox} from '@mui/material';
+import { Grid, Card, Typography, Checkbox} from '@mui/material';
 import { Questions } from './Questions';
 
 export const QuestionCard = ({questions}: {questions: Questions}) => {
@@ -13,7 +13,7 @@ export const QuestionCard = ({questions}: {questions: Questions}) => {
                             <Grid item xs={12}>{question.question}</Grid>
                             {question.options.map((option, i) => (
                                 <div key={i}>
-                                <Grid item xs={1}><CheckBox checked={false} onChange={() => {}}/></Grid>
+                                <Grid item xs={1}><Checkbox checked={false} onChange={() => {}}/></Grid>
                                 <Grid item xs={11}>{option}</Grid>
                                     </div>
                             ))}
