@@ -33,6 +33,8 @@ const [openAnswer, setOpenAnswer] = useState(false)
         </b></Typography>
         </>
     )
+    console.log(index)
+    console.log(questions.questions[index].answer)
     return (
         <>
         <QuestionAsked question={questions.questions[index]} questions={questions} setQuestions={setQuestions} index={index}/>
@@ -44,7 +46,7 @@ const [openAnswer, setOpenAnswer] = useState(false)
         <Button disabled={questions.questions[index].answer === null} variant="outlined" onClick={() => setOpenAnswer(!openAnswer)}>See answer</Button>
         ) : (
             <Typography variant="subtitle1" align="left"><b>
-                {`(${questions.questions[index].answer === questions.questions[index].correctAnswer ? "Great!" : "Nope."}`} <br/>
+                {`${questions.questions[index].answer === questions.questions[index].correctAnswer ? "Great!" : "Nope."}`} <br/>
                 Correct Answer: <br/>{`(${index + 1}) ${questions.questions[index].correctAnswer}`}</b>
                 </Typography>
            
