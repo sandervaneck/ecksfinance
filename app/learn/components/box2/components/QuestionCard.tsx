@@ -31,7 +31,7 @@ const [index, setindex] = useState(0)
             if (index - 1 >= 0) setindex(index + 1)}
         }>Back</Button>
         <Button variant="outlined" onClick={() => {
-            if (index + 1 <= questions.length -1) setindex(index + 1)}
+            if (index + 1 <= questions.questions.length -1) setindex(index + 1)}
         }>Next</Button>    
         </>
     )
