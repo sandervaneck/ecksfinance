@@ -24,15 +24,28 @@ export const QuestionCard: React.FC<QuestionFormProps> = ({questions, setQuestio
 
 const QuestionsStepper: React.FC<QuestionFormProps> = ({questions, setQuestions}) => {
 const [index, setindex] = useState(0)
+const [openAnswer, setOpenAnswer] = useState(false)
     return (
         <>
         <QuestionAsked question={questions.questions[index]} questions={questions} setQuestions={setQuestions} index={index}/>
-        <Button variant="outlined" onClick={() => {
-            if (index - 1 >= 0) setindex(index + 1)}
-        }>Back</Button>
-        <Button variant="outlined" onClick={() => {
-            if (index + 1 <= questions.questions.length -1) setindex(index + 1)}
-        }>Next</Button>    
+        {/* <Button variant="outlined" onClick={() => {
+            if (index - 1 >= 0) setindex(index - 1)}
+        }>Back</Button> */}
+        <Grid container xs={12}>
+        <Grid item xs={12}>{openAnswer ? (
+        <Button disabled={openAnswer} variant="outlined" onClick={() => setOpenAnswer(!openAnswer)}>See answer</Button>
+        ) : (
+            <Typography variant="subtitle1" align="left"><b>Answer: <br/>{`(${index + 1}) ${questions.questions[index].answer}`}</b></Typography>
+           
+        )}</Grid>
+        <Grid item xs={12}>
+        <Button disabled={!openAnswer} variant="outlined" onClick={() => {
+            setOpenAnswer(!openAnswer)
+            if (index + 1 <= questions.questions.length -1) setindex(index + 1);
+        }
+        }>Next Question</Button>
+        </Grid>
+        </Grid>  
         </>
     )
 }
