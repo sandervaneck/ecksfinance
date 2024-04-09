@@ -1,15 +1,37 @@
-import { Grid, Card, Typography, Checkbox} from '@mui/material';
-import { Questions } from './Questions';
+import { Grid, Card, Typography, Checkbox, Button} from '@mui/material';
+import { Question, Questions } from './Questions';
+import React, { useState } from 'react';
 
 export const QuestionCard = ({questions}: {questions: Questions}) => {
 
     return (
         <Card>
-            <Grid container>
-                <Grid item xs={12}>
+                <Grid container>
                     <Typography variant="h6" align="center">{questions.title}</Typography>
-                    {questions.questions.map((question, index) => (
-                        <div key={index}>
+                    <QuestionsStepper questions={questions.questions}/>
+                </Grid>
+        </Card>
+    )
+}
+
+const QuestionsStepper = ({questions}: {questions: Question[]}) => {
+const [index, setindex] = useState(0)
+    return (
+        <>
+        <QuestionAsked question={questions[index]} index={index}/>
+        <Button variant="outlined" onClick={() => {
+            if (index + 1 <= questions.length -1) setindex(index + 1)}
+        }>Next</Button>
+
+        <Button variant="outlined" onClick={() => {
+            if (index - 1 >= 0) setindex(index + 1)}
+        }>Back</Button>
+        </>
+    )
+}
+const QuestionAsked = ({question, index}: {question: Question, index: number}) => {
+    return (    
+    <Grid container xs={12} key={index}>
                             <Grid item xs={12}>{question.question}</Grid>
                             {question.options.map((option, i) => (
                                 <div key={i}>
@@ -17,10 +39,7 @@ export const QuestionCard = ({questions}: {questions: Questions}) => {
                                 <Grid item xs={11}>{option}</Grid>
                                     </div>
                             ))}
-                            </div>
-                    ))}
-                </Grid>
-            </Grid>
-        </Card>
+                            
+                            </Grid>
     )
 }

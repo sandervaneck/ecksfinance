@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Card } from '@tremor/react';
 import { Box, Grid } from '@mui/material';
 import { Box2 } from './components/box2';
