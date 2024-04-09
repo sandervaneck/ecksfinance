@@ -55,4 +55,4 @@ export const question6: Question = {
 
 export const questions1: Questions = {
     title: "Price to Earnings (P/E) Ratio Questions",
-    questions: [question1, question2, question3, question4, question5, question6]}]
+    questions: [question1, question2, question3, question4, question5, question6]}
