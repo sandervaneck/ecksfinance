@@ -8,7 +8,7 @@ interface QuestionsCardProps {
 }
 interface QuestionProps {
     question: Question;
-    questions: Questions;
+    questions: Question[];
     setQuestions: (q: Questions) => void;
     index: number;
 }
