@@ -43,13 +43,16 @@ const [openAnswer, setOpenAnswer] = useState(false)
         <Grid item xs={12}>{!openAnswer ? (
         <Button disabled={questions.questions[index].answer === null} variant="outlined" onClick={() => setOpenAnswer(!openAnswer)}>See answer</Button>
         ) : (
-            <Typography variant="subtitle1" align="left"><b>Answer: <br/>{`(${index + 1}) ${questions.questions[index].correctAnswer}`}</b></Typography>
+            <Typography variant="subtitle1" align="left"><b>
+                {`(${questions.questions[index].answer === questions.questions[index].correctAnswer ? "Great!" : "Nope."}`} <br/>
+                Correct Answer: <br/>{`(${index + 1}) ${questions.questions[index].correctAnswer}`}</b>
+                </Typography>
            
         )}</Grid>
         <Grid item xs={12}>
         <Button disabled={!openAnswer} variant="outlined" onClick={() => {
             setOpenAnswer(!openAnswer)
-            if (index + 1 <= questions.questions.length -1) setindex(index + 1);
+            setindex(index + 1);
         }
         }>Next Question</Button>
         </Grid>
