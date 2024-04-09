@@ -1,5 +1,5 @@
 
-export type Questions = {
+export type QuestionForm = {
     title: string,
     questions: Question[]
 }
@@ -53,6 +53,6 @@ export const question6: Question = {
     answer: "+/ 15. Historically, the long-term average P/E ratio for the stock market has been around 15. This ratio provides a baseline for evaluating whether the market as a whole is overvalued or undervalued. When the market P/E is significantly above or below its average, it may indicate potential opportunities or risk for investors. However, it is important to note that this average can vary over time due to changes in economic conditions, investor sentiment, and other factors. As Benjamin Graham, the father of value investing, famously said: In the short run, the market is a voting machine, but in the long run it is a weighing machine."
 }
 
-export const questions1: Questions = {
+export const questions1: QuestionForm = {
     title: "Price to Earnings (P/E) Ratio Questions",
     questions: [question1, question2, question3, question4, question5, question6]}

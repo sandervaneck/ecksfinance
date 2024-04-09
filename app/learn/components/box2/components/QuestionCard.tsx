@@ -1,15 +1,15 @@
 import { Grid, Card, Typography, Checkbox, Button} from '@mui/material';
-import { Question, Questions } from './Questions';
+import { Question, QuestionForm } from './Questions';
 import React, { useState } from 'react';
 
-interface QuestionsCardProps {
-    questions: Questions;
-    setQuestions: (q: Questions) => void;
+interface QuestionForm {
+    questions: QuestionForm;
+    setQuestions: (q: QuestionForm) => void;
 }
 interface QuestionProps {
     question: Question;
-    questions: Questions;
-    setQuestions: (q: Questions) => void;
+    questions: QuestionForm;
+    setQuestions: (q: QuestionForm) => void;
     index: number;
 }
 export const QuestionCard: React.FC<QuestionsCardProps> = ({questions, setQuestions}) => {
@@ -43,7 +43,7 @@ const QuestionAsked: React.FC<QuestionProps> = ({question, questions, index, set
                             <Grid item xs={12}><Typography variant="subtitle1" align="left">{`(${index + 1}) ${question.question}`}</Typography></Grid>
                             {question.options.map((option, i) => (
                                 <Grid container xs={12} key={i}>
-                                <Grid item xs={1}><Checkbox checked={questions.questions.index.answer === option} onChange={() => {
+                                <Grid item xs={1}><Checkbox checked={questions.questions[index].answer === option} onChange={() => {
                                     const old = [...questions.questions]
                                     old[index] = {
                                         ...old[index],

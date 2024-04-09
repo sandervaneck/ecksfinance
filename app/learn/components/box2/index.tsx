@@ -1,10 +1,10 @@
 import { Grid, Card} from '@mui/material';
 import { QuestionCard } from './components/QuestionCard';
-import { questions1 } from './components/Questions';
+import { QuestionForm, questions1 } from './components/Questions';
 import React, { useState } from 'react';
 
 export const Box2 = () => {
-    const [questions, setQuestions] = useState(questions1)
+    const [questions, setQuestions] = useState<QuestionForm>(questions1)
     return (<Card>
         <Grid container>
             <Grid item xs={12}>
