@@ -26,9 +26,9 @@ const QuestionsStepper: React.FC<QuestionFormProps> = ({questions, setQuestions}
 const [index, setindex] = useState(0)
 const [openAnswer, setOpenAnswer] = useState(false)
 
-    if (index === questions.questions.length - 1) return (
+    if (index === questions.questions.length) return (
         <>
-        <Typography variant="subtitle1" align="left"><b>Questions Done: <br/>Score: 
+        <Typography variant="subtitle1" align="left"><b>Questions Done. <br/> Your final Score: 
         {((questions.questions.filter(q => q.answer === q.correctAnswer).length / 6) * 100).toFixed(0)}%
         </b></Typography>
         </>
@@ -41,7 +41,7 @@ const [openAnswer, setOpenAnswer] = useState(false)
         }>Back</Button> */}
         <Grid container xs={12}>
         <Grid item xs={12}>{!openAnswer ? (
-        <Button disabled={openAnswer} variant="outlined" onClick={() => setOpenAnswer(!openAnswer)}>See answer</Button>
+        <Button disabled={questions.questions[index].answer === null} variant="outlined" onClick={() => setOpenAnswer(!openAnswer)}>See answer</Button>
         ) : (
             <Typography variant="subtitle1" align="left"><b>Answer: <br/>{`(${index + 1}) ${questions.questions[index].correctAnswer}`}</b></Typography>
            
