@@ -1,4 +1,4 @@
-import { Grid, Card, Typography} from '@mui/material';
+import { Grid, Card, Typography, CheckBox} from '@mui/material';
 import { Questions } from './Questions';
 
 export const QuestionCard = ({questions}: {questions: Questions}) => {

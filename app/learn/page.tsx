@@ -13,7 +13,7 @@ const LearnPage = () => {
         <Card>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Box1
+              <Box2
               />
             </Grid>
           </Grid>
