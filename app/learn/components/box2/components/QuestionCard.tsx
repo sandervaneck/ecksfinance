@@ -40,7 +40,7 @@ const [index, setindex] = useState(0)
 const QuestionAsked: React.FC<QuestionProps> = ({question, questions, index, setQuestions}) => {
     return (    
     <Grid container xs={12} key={index}>
-                            <Grid item xs={12}><Typography variant="subtitle" align="left">{`(${index + 1}) ${question.question}`}</Typography></Grid>
+                            <Grid item xs={12}><Typography variant="subtitle1" align="left">{`(${index + 1}) ${question.question}`}</Typography></Grid>
                             {question.options.map((option, i) => (
                                 <Grid container xs={12} key={i}>
                                 <Grid item xs={1}><Checkbox checked={false} onChange={() => {
