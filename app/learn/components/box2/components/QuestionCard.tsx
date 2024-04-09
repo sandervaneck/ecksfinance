@@ -6,10 +6,8 @@ export const QuestionCard = ({questions}: {questions: Questions}) => {
 
     return (
         <Card>
-                <Grid container>
                     <Typography variant="h6" align="center">{questions.title}</Typography>
                     <QuestionsStepper questions={questions.questions}/>
-                </Grid>
         </Card>
     )
 }
@@ -20,12 +18,11 @@ const [index, setindex] = useState(0)
         <>
         <QuestionAsked question={questions[index]} index={index}/>
         <Button variant="outlined" onClick={() => {
-            if (index + 1 <= questions.length -1) setindex(index + 1)}
-        }>Next</Button>
-
-        <Button variant="outlined" onClick={() => {
             if (index - 1 >= 0) setindex(index + 1)}
         }>Back</Button>
+        <Button variant="outlined" onClick={() => {
+            if (index + 1 <= questions.length -1) setindex(index + 1)}
+        }>Next</Button>    
         </>
     )
 }
@@ -34,12 +31,11 @@ const QuestionAsked = ({question, index}: {question: Question, index: number}) =
     <Grid container xs={12} key={index}>
                             <Grid item xs={12}>{question.question}</Grid>
                             {question.options.map((option, i) => (
-                                <div key={i}>
+                                <Grid container xs={12} key={i}>
                                 <Grid item xs={1}><Checkbox checked={false} onChange={() => {}}/></Grid>
                                 <Grid item xs={11}>{option}</Grid>
-                                    </div>
+                                    </Grid>
                             ))}
-                            
                             </Grid>
     )
 }
