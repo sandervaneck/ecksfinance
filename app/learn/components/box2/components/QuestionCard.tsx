@@ -2,7 +2,7 @@ import { Grid, Card, Typography, Checkbox, Button} from '@mui/material';
 import { Question, QuestionForm } from './Questions';
 import React, { useState } from 'react';
 
-interface QuestionForm {
+interface QuestionFormProps {
     questions: QuestionForm;
     setQuestions: (q: QuestionForm) => void;
 }
@@ -12,7 +12,7 @@ interface QuestionProps {
     setQuestions: (q: QuestionForm) => void;
     index: number;
 }
-export const QuestionCard: React.FC<QuestionsCardProps> = ({questions, setQuestions}) => {
+export const QuestionCard: React.FC<QuestionFormProps> = ({questions, setQuestions}) => {
 
     return (
         <Card>
@@ -22,7 +22,7 @@ export const QuestionCard: React.FC<QuestionsCardProps> = ({questions, setQuesti
     )
 }
 
-const QuestionsStepper: React.FC<QuestionsCardProps> = ({questions, setQuestions}) => {
+const QuestionsStepper: React.FC<QuestionFormProps> = ({questions, setQuestions}) => {
 const [index, setindex] = useState(0)
     return (
         <>
