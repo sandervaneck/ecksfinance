@@ -40,7 +40,7 @@ const [openAnswer, setOpenAnswer] = useState(false)
             if (index - 1 >= 0) setindex(index - 1)}
         }>Back</Button> */}
         <Grid container xs={12}>
-        <Grid item xs={12}>{openAnswer ? (
+        <Grid item xs={12}>{!openAnswer ? (
         <Button disabled={openAnswer} variant="outlined" onClick={() => setOpenAnswer(!openAnswer)}>See answer</Button>
         ) : (
             <Typography variant="subtitle1" align="left"><b>Answer: <br/>{`(${index + 1}) ${questions.questions[index].correctAnswer}`}</b></Typography>
