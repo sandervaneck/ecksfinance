@@ -1,7 +1,11 @@
 import { MenuItem, Select, Box, Stack } from '@mui/material';
-import { Box1Props } from '../../../types';
 
-export const SelectTicker: React.FC<Box1Props> = ({ item, setItem }) => {
+export interface TickerProps {
+  item: string;
+  setItem: (e: string) => void;
+}
+
+export const SelectTicker: React.FC<TickerProps> = ({ item, setItem }) => {
   return (
     <Box sx={{ mt: 2, ml: 2 }}>
       <Stack direction="row" spacing={1}>

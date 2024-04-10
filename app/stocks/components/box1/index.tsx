@@ -12,7 +12,7 @@ export const Box1: React.FC<Box1Props> = ({
   investmentData
 }) => {
   const [changed, setChanged] = useState(false);
-  console.log(changed);
+
   return (
     <Card>
       <Grid container xs={12}>
@@ -23,9 +23,6 @@ export const Box1: React.FC<Box1Props> = ({
               setChanged(true);
               setItem(e);
             }}
-            stocks={stocks}
-            setStocks={setStocks}
-            investmentData={investmentData}
           />
         </Grid>
         <Grid item xs={8}>
