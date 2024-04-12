@@ -12,7 +12,7 @@ interface TotalCardProps {
   setChanged: (b: boolean) => void;
 }
 
-const getData = (item: string): string => {
+export const getData = (item: string): string => {
   let result;
   switch (true) {
     case item === 'BTC':
@@ -167,4 +167,41 @@ export const TotalCard: React.FC<TotalCardProps> = ({
       </Grid>
     </Box>
   );
+};
+
+export const parseDefaultData = async (setStocks: (s: StockData[]) => void) => {
+  try {
+    const path = '/stocks.xlsx';
+    const response = await fetch(path);
+    const blob = await response.blob();
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const data =
+        event.target && new Uint8Array(event.target.result as ArrayBuffer);
+      const workbook = XLSX.read(data, { type: 'array' });
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+      const rows: any[] = XLSX.utils.sheet_to_json(worksheet, {
+        header: 1
+      });
+
+      const parsedStocks: StockData[] = [];
+      // Assuming your data starts from the second row (index 1)
+      for (let i = 1; i < rows.length; i++) {
+        const row = rows[i];
+        const dateParts = row[0].split('-').map(Number);
+        const date = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
+        const price = Number(row[4]);
+        parsedStocks.push({ date, price });
+      }
+      const sortedData = parsedStocks
+        .slice()
+        .sort((a, b) => a.date.getTime() - b.date.getTime());
+
+      setStocks(sortedData);
+    };
+    reader.readAsArrayBuffer(blob);
+  } catch (error) {
+    console.error('Error parsing stock data:', error);
+  }
 };

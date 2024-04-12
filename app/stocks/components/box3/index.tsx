@@ -6,7 +6,7 @@ export const Box3: React.FC<Box3Props> = ({ stocks }) => {
   return (
     <Card>
       <Grid item xs={12}>
-        <Chart data={stocks} />
+        <Chart data={stocks} title="Historic Stock Prices" />
       </Grid>
     </Card>
   );

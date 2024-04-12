@@ -5,8 +5,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 export interface SelectPredictionDateProps {
-  date: Dayjs | null;
-  setDate: (e: Dayjs | null) => void;
+  date: Dayjs;
+  setDate: (e: Dayjs) => void;
 }
 
 export const SelectPredictionDate: React.FC<SelectPredictionDateProps> = ({
@@ -18,7 +18,9 @@ export const SelectPredictionDate: React.FC<SelectPredictionDateProps> = ({
       <DatePicker
         label="Prediction Date"
         value={date}
-        onChange={(date) => setDate(date)}
+        onChange={(date) => {
+          if (date !== null) setDate(date);
+        }}
       />
     </Box>
   );

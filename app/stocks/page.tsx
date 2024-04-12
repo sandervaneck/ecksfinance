@@ -8,6 +8,7 @@ import { Box1 } from './components/box1';
 import { Box3 } from './components/box3';
 import { Box2 } from './components/box2';
 import { HeadBox } from '../sharedComponents/headbox';
+import { parseDefaultData } from './components/box1/components/TotalInvestmentCard';
 
 const hundredPerYear = (): { year: number; monthlyInvestment: number }[] => {
   const currentYear = new Date().getFullYear();
@@ -29,19 +30,21 @@ const startInvestmentData: InvestmentData = {
 };
 
 const StocksPage = () => {
-  const title="Compound investing returns (dollar average investing)"
-  const subtitle="What would your returns have been in case you did dollar average investing in the followin tickers?"
+  const title = 'Compound investing returns (dollar average investing)';
+  const subtitle =
+    'What would your returns have been in case you did dollar average investing in the followin tickers?';
   const [item, setItem] = useState('IBM');
   const [investmentData, setInvestmentData] =
     useState<InvestmentData>(startInvestmentData);
   const [stocks, setStocks] = useState<Stock[]>([emptyStock]);
+  if (stocks.length === 1) parseDefaultData(setStocks);
   return (
     <>
       <Box sx={{ mt: 5, ml: 3, mr: 5 }}>
         <Card>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <HeadBox title={title} subtitle={subtitle}/>
+              <HeadBox title={title} subtitle={subtitle} />
             </Grid>
             <Grid item xs={12}>
               <Box1

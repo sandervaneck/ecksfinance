@@ -29,6 +29,7 @@
     "eslint-config-next": "14.0.0",
     "js-cookie": "^3.0.5",
     "lodash": "^4.17.21",
+    "ml-random-forest": "^2.1.0",
     "next": "14.0.0",
     "next-auth": "5.0.0-beta.3",
     "postcss": "^8.4.31",
