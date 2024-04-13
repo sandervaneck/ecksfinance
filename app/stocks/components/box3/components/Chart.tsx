@@ -62,6 +62,8 @@ export const DoubleChart = ({
         index="date"
         categories={['ml', 'prediction']}
         colors={['indigo', 'rose']}
+        autoMinValue={true}
+        startEndOnly={true}
       />
     </Card>
   );

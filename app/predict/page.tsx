@@ -26,7 +26,6 @@ const PredictPage = () => {
   const [predictedPrice, setPredictedPrice] = useState<number>(
     Number(stocks[stocks.length - 1].price.toFixed(2))
   );
-
   if (stocks.length === 1) parseDefaultData(setStocks);
 
   return (

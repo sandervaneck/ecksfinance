@@ -58,28 +58,20 @@ export const mlCalc = (
   // Filter results to include only dates after the last date in the original data
   const lastDate = data[data.length - 1].date;
   const lastPrice = data[data.length - 1].price;
-  // Calculate the next day after the last date
-  const nextDay = new Date(lastDate.getTime() + 24 * 60 * 60 * 1000);
-
   const volatility = calculateVolatility(data);
 
-  // Iterate over each day from the next day to the prediction date
+  // Iterate over each day from the next day after the last date to the prediction date
   for (
-    let date = nextDay;
+    let date = new Date(lastDate.getTime() + 24 * 60 * 60 * 1000);
     date <= predictionDate.toDate();
     date.setDate(date.getDate() + 1)
   ) {
-    const previousDataPoint = result[result.length - 1];
-    // Calculate the time difference between the current date and the last date in days
-    const timeDifference =
-      (date.getTime() - previousDataPoint.date.getTime()) /
-      (24 * 60 * 60 * 1000);
+    const previousData = data.slice(-45); // Take the previous 45 days
+    const previousPrice = previousData[previousData.length - 1].price; // Price of the last day in previous data
 
-    const randomFactor = Math.random() * volatility * 2 - volatility; // Random factor based on volatility
+    const randomFactor = Math.random() * volatility * (2 - volatility); // Random factor based on volatility
     const predictedPrice =
-      previousDataPoint.price +
-      (previousDataPoint.price - lastPrice) * (timeDifference / data.length) +
-      randomFactor;
+      regression.predict([[date.getTime(), previousPrice]])[0] + randomFactor;
 
     // Construct the predicted result object for the current date
     const predictedResult: StockData = {
@@ -92,7 +84,7 @@ export const mlCalc = (
   }
 
   // Return the predicted result
-  return result.filter((d) => d.date > lastDate);
+  return result.filter((r) => r.date >= lastDate);
 };
 
 export const extrapolatePrediction = (
