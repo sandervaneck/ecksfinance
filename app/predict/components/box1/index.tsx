@@ -16,14 +16,14 @@ export const Box1: React.FC<Box1Props> = ({
   item,
   setItem,
   stocks,
-  setChanged,
+  setPredict,
   date,
   setDate,
   setStocks,
-  ml,
   setMl,
   setPrediction,
-  prediction
+  predictedPrice,
+  setPredictedPrice
 }) => {
   const parseData = async () => {
     try {
@@ -60,37 +60,49 @@ export const Box1: React.FC<Box1Props> = ({
       console.error('Error parsing stock data:', error);
     }
   };
-  const [predictedPrice, setPredictedPrice] = useState<number>(
-    Number(stocks[stocks.length - 1].price.toFixed(2))
-  );
+
   return (
     <Card>
       <Grid container xs={12} spacing={2}>
-        <FirstGrid
-          item={item}
-          setItem={setItem}
-          date={date}
-          setDate={setDate}
-          stocks={stocks}
-          parseData={parseData}
-          setMl={setMl}
-          setChanged={setChanged}
-          setStocks={setStocks}
-          ml={ml}
-        />
         <Grid item xs={6}>
-          <OwnPrediction
-            prediction={predictedPrice}
-            setPrediction={(e: number) => {
-              setPredictedPrice(e);
-              const result: StockData[] = [];
-              extrapolatePrediction(result, stocks, {
-                date: date.toDate(),
-                price: e
-              });
-              setPrediction(result);
-            }}
-          />
+          <Grid item xs={12}>
+            <SelectTicker
+              item={item}
+              setItem={(e) => {
+                // setChanged(true);
+                setItem(e);
+                parseData();
+              }}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <SelectPredictionDate date={date} setDate={setDate} />
+          </Grid>
+          <Grid item xs={12}>
+            <OwnPrediction
+              prediction={predictedPrice}
+              setPrediction={(e: number) => {
+                setPredictedPrice(e);
+                const result: StockData[] = [];
+                extrapolatePrediction(result, stocks, {
+                  date: date.toDate(),
+                  price: e
+                });
+                setPrediction(result);
+              }}
+            />
+          </Grid>
+          <Grid item xs={0.5}></Grid>
+          <Grid item xs={11.5}>
+            {date !== null && (
+              <PredictButton
+                onClick={() => {
+                  setMl(mlCalc(stocks, date));
+                  setPredict(true);
+                }}
+              />
+            )}
+          </Grid>
         </Grid>
       </Grid>
     </Card>
@@ -134,6 +146,7 @@ const FirstGrid: React.FC<FirstGridProps> = ({
       <Grid item xs={12}>
         <SelectPredictionDate date={date} setDate={setDate} />
       </Grid>
+
       <Grid item xs={0.5}></Grid>
       <Grid item xs={11.5}>
         {date !== null && (

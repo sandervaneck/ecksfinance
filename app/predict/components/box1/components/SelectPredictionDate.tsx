@@ -16,7 +16,7 @@ export const SelectPredictionDate: React.FC<SelectPredictionDateProps> = ({
   return (
     <Box sx={{ mt: 2, ml: 2 }}>
       <DatePicker
-        label="Prediction Date"
+        label="Predict price for date:"
         value={date}
         onChange={(date) => {
           if (date !== null) setDate(date);

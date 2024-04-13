@@ -1,4 +1,4 @@
-import { Box, TextField } from '@mui/material';
+import { Box, InputAdornment, TextField } from '@mui/material';
 
 interface OwnPredictionProps {
   prediction: number;
@@ -11,11 +11,14 @@ export const OwnPrediction: React.FC<OwnPredictionProps> = ({
 }) => {
   return (
     <Box sx={{ ml: 2, mt: 2 }}>
-      Your prediction:
       <TextField
+        label="My prediction:"
         type="number"
         value={prediction}
         onChange={(e) => setPrediction(Number(e.target.value))}
+        InputProps={{
+          startAdornment: <InputAdornment position="start">€</InputAdornment>
+        }}
       />
     </Box>
   );

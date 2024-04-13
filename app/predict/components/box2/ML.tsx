@@ -2,6 +2,20 @@ import { RandomForestRegression as RFRegression } from 'ml-random-forest';
 import { StockData } from '../../../stocks/types';
 import { Dayjs } from 'dayjs';
 
+const calculateVolatility = (data: StockData[]): number => {
+  // Calculate daily returns
+  const returns = data
+    .slice(1)
+    .map((d, i) => (d.price - data[i].price) / data[i].price);
+
+  // Calculate standard deviation of returns as a proxy for volatility
+  const stdDev = Math.sqrt(
+    returns.reduce((sum, r) => sum + Math.pow(r, 2), 0) / returns.length
+  );
+
+  return stdDev;
+};
+
 export const mlCalc = (
   data: StockData[],
   predictionDate: Dayjs
@@ -47,6 +61,8 @@ export const mlCalc = (
   // Calculate the next day after the last date
   const nextDay = new Date(lastDate.getTime() + 24 * 60 * 60 * 1000);
 
+  const volatility = calculateVolatility(data);
+
   // Iterate over each day from the next day to the prediction date
   for (
     let date = nextDay;
@@ -59,10 +75,11 @@ export const mlCalc = (
       (date.getTime() - previousDataPoint.date.getTime()) /
       (24 * 60 * 60 * 1000);
 
-    // Predict the price for the current date using the extrapolated trend
+    const randomFactor = Math.random() * volatility * 2 - volatility; // Random factor based on volatility
     const predictedPrice =
       previousDataPoint.price +
-      (previousDataPoint.price - lastPrice) * (timeDifference / data.length);
+      (previousDataPoint.price - lastPrice) * (timeDifference / data.length) +
+      randomFactor;
 
     // Construct the predicted result object for the current date
     const predictedResult: StockData = {
@@ -77,6 +94,7 @@ export const mlCalc = (
   // Return the predicted result
   return result.filter((d) => d.date > lastDate);
 };
+
 export const extrapolatePrediction = (
   result: StockData[],
   data: StockData[],

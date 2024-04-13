@@ -4,7 +4,6 @@ import { StockData } from '../stocks/types';
 export interface Box1Props {
   item: string;
   setItem: (s: string) => void;
-  setChanged: (s: boolean) => void;
   date: Dayjs;
   setDate: (d: Dayjs) => void;
   stocks: StockData[];
@@ -13,4 +12,7 @@ export interface Box1Props {
   ml: StockData[];
   prediction: StockData[];
   setPrediction: (s: StockData[]) => void;
+  setPredict: (b: boolean) => void;
+  setPredictedPrice: (b: number) => void;
+  predictedPrice: number;
 }

@@ -22,9 +22,13 @@ const PredictPage = () => {
   const [stocks, setStocks] = useState([emptyStock]);
   const [ml, setml] = useState([emptyStock]);
   const [prediction, setPrediction] = useState<StockData[]>(ml);
-  const [pressed, setPressed] = useState(false);
+  const [predict, setPredict] = useState(false);
+  const [predictedPrice, setPredictedPrice] = useState<number>(
+    Number(stocks[stocks.length - 1].price.toFixed(2))
+  );
+
   if (stocks.length === 1) parseDefaultData(setStocks);
-  console.log(prediction);
+
   return (
     <>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -37,25 +41,26 @@ const PredictPage = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <Box1
+                    setPredict={() => setPredict(true)}
                     stocks={stocks}
                     setStocks={setStocks}
                     item={item}
                     setItem={setItem}
-                    setChanged={(e: boolean) => {}}
                     date={date}
                     setDate={setDate}
                     setMl={setml}
                     ml={ml}
                     prediction={prediction}
                     setPrediction={(s) => {
-                      setPressed(true);
                       setPrediction(s);
                     }}
+                    predictedPrice={predictedPrice}
+                    setPredictedPrice={setPredictedPrice}
                   />
                 </Grid>
                 <Stack direction="row" spacing={1}>
                   <Chart data={stocks} title="Historic Stock Prices" />
-                  {prediction !== ml && pressed ? (
+                  {prediction !== ml && predictedPrice !== 0 ? (
                     <DoubleChart
                       data={ml
                         .map((s, i) => {
