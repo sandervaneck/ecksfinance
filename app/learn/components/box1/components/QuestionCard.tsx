@@ -1,34 +1,59 @@
-import { Grid, Card, Typography, Checkbox, Button } from '@mui/material';
-import { Question, QuestionForm } from './Questions';
+import {
+  Grid,
+  Card,
+  Typography,
+  Checkbox,
+  Button,
+  TextField
+} from '@mui/material';
+import { BonusQuestion, Question, QuestionForm } from './Questions';
 import React, { useState } from 'react';
 
 interface QuestionFormProps {
+  submit: () => void;
   questions: QuestionForm;
   setQuestions: (q: QuestionForm) => void;
+  bonusQuestion: BonusQuestion;
+  setBonusQuestion: (b: BonusQuestion) => void;
 }
 interface QuestionProps {
+  submit: () => void;
   question: Question;
   questions: QuestionForm;
   setQuestions: (q: QuestionForm) => void;
+  bonusQuestion: BonusQuestion;
+  setBonusQuestion: (b: BonusQuestion) => void;
   index: number;
 }
 export const QuestionCard: React.FC<QuestionFormProps> = ({
+  submit,
   questions,
-  setQuestions
+  setQuestions,
+  bonusQuestion,
+  setBonusQuestion
 }) => {
   return (
     <Card>
       <Typography variant="h6" align="center">
         {questions.title}
       </Typography>
-      <QuestionsStepper questions={questions} setQuestions={setQuestions} />
+      <QuestionsStepper
+        submit={submit}
+        questions={questions}
+        setQuestions={setQuestions}
+        bonusQuestion={bonusQuestion}
+        setBonusQuestion={setBonusQuestion}
+      />
     </Card>
   );
 };
 
 const QuestionsStepper: React.FC<QuestionFormProps> = ({
   questions,
-  setQuestions
+  setQuestions,
+  bonusQuestion,
+  setBonusQuestion,
+  submit
 }) => {
   const [index, setindex] = useState(0);
   const [openAnswer, setOpenAnswer] = useState(false);
@@ -51,6 +76,26 @@ const QuestionsStepper: React.FC<QuestionFormProps> = ({
             %
           </b>
         </Typography>
+        <Typography variant="subtitle1" align="center">
+          Bonus Question:
+        </Typography>
+        <BonusQuestionAsked
+          submit={submit}
+          question={questions.questions[index]}
+          questions={questions}
+          setQuestions={setQuestions}
+          index={index}
+          setBonusQuestion={setBonusQuestion}
+          bonusQuestion={bonusQuestion}
+        />
+        <Button
+          variant="outlined"
+          onClick={() => {
+            submit();
+          }}
+        >
+          Submit your answers
+        </Button>
       </>
     );
   const correctAnswer = questions.questions[index].correctAnswer;
@@ -62,10 +107,13 @@ const QuestionsStepper: React.FC<QuestionFormProps> = ({
   return (
     <>
       <QuestionAsked
+        submit={submit}
         question={questions.questions[index]}
         questions={questions}
         setQuestions={setQuestions}
         index={index}
+        setBonusQuestion={setBonusQuestion}
+        bonusQuestion={bonusQuestion}
       />
       <Grid container xs={12}>
         <Grid item xs={12}>
@@ -101,6 +149,54 @@ const QuestionsStepper: React.FC<QuestionFormProps> = ({
           </Button>
         </Grid>
       </Grid>
+    </>
+  );
+};
+
+const BonusQuestionAsked: React.FC<QuestionProps> = ({
+  bonusQuestion,
+  setBonusQuestion,
+  index
+}) => {
+  return (
+    <Grid container xs={12} key={index}>
+      <Grid item xs={12}>
+        <Typography
+          variant="subtitle1"
+          align="left"
+        >{`Bonus: ${bonusQuestion.question}`}</Typography>
+      </Grid>
+      <Grid container xs={12}>
+        <Grid item xs={12}>
+          <Typography variant="body1" align="left">
+            {writeBackgroundInfo(bonusQuestion.backgroundInfo)}
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            type="number"
+            value={bonusQuestion.answer}
+            onChange={(e) => {
+              setBonusQuestion({
+                ...bonusQuestion,
+                answer: Number(e.target.value)
+              });
+            }}
+          />
+        </Grid>
+      </Grid>
+    </Grid>
+  );
+};
+
+const writeBackgroundInfo = (s: string) => {
+  const parts = s.split(',');
+
+  return (
+    <>
+      {parts.map((part, index) => (
+        <div key={index}>{part.trim()}</div>
+      ))}
     </>
   );
 };

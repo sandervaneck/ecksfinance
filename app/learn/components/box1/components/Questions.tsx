@@ -11,6 +11,12 @@ export type Question = {
   answer: string | null;
 };
 
+export type BonusQuestion = {
+  question: string;
+  answer: number | null;
+  backgroundInfo: string;
+};
+
 export const question1: Question = {
   no: 1,
   question: 'What does the Price to Earnings (P/E) ratio measure?',
@@ -85,6 +91,14 @@ export const question6: Question = {
   answer: null,
   correctAnswer:
     '+/ 15. Historically, the long-term average P/E ratio for the stock market has been around 15. This ratio provides a baseline for evaluating whether the market as a whole is overvalued or undervalued. When the market P/E is significantly above or below its average, it may indicate potential opportunities or risk for investors. However, it is important to note that this average can vary over time due to changes in economic conditions, investor sentiment, and other factors. As Benjamin Graham, the father of value investing, famously said: In the short run, the market is a voting machine, but in the long run it is a weighing machine.'
+};
+
+export const bonusQuestion: BonusQuestion = {
+  question:
+    "What do you expect Nike's P/E ratio to be on the next earnings report (June 27th)?",
+  answer: null,
+  backgroundInfo:
+    'Average P/E ratio over the previous 10 years: 36.3, Last 4:, August 2023: 30.01, November 2023: 31.78, February 2024: 30.21, April 2024: 27.25,'
 };
 
 export const questions1: QuestionForm = {

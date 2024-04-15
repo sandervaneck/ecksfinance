@@ -5,7 +5,6 @@ import { Card } from '@tremor/react';
 import { Box, Grid } from '@mui/material';
 import { Box1 } from './components/box1';
 import { HeadBox } from '../sharedComponents/headbox';
-import { Box2 } from './components/box2';
 
 const LearnPage = () => {
   const title = 'Learn more about stocks!';
@@ -20,9 +19,6 @@ const LearnPage = () => {
             </Grid>
             <Grid item xs={12}>
               <Box1 />
-            </Grid>
-            <Grid item xs={12}>
-              <Box2 />
             </Grid>
           </Grid>
         </Card>
