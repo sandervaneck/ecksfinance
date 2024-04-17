@@ -5,11 +5,11 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
       <h2 className={`mb-3 text-2xl font-semibold`}>
-           Welcome to this Stocks & Finance Page{' '}<br/>
-           On this page you can learn about long-term investing Dollar-Average-Investing returns by clicking on <a href="/Stocks">Stocks</a> in the top bar<br/>
-           Weekly, there is a new informative question series for you to answer on the <a href="/learn">Learn About Stocks</a> page<br/>
-           Want to see how a machine learning algoritm predicts stock returns and compete against him? Check out the <a href="/predict">Predict Stock Return</a> page<br/>
-           Hence, this website will help to inform you about possible returns, stocks information and stock forecasts.<br/> 
+           Welcome to this Stocks & Finance Page{' '}<br/><br/>
+           On this page you can learn about long-term investing Dollar-Average-Investing returns by clicking on <a href="/stocks">Stocks</a> in the top bar<br/><br/>
+           Weekly, there is a new informative question series for you to answer on the <a href="/learn">Learn About Stocks</a> page<br/><br/>
+           Want to see how a machine learning algoritm predicts stock returns and compete against him? Check out the <a href="/predict">Predict Stock Return</a> page<br/><br/>
+           Hence, this website will help to inform you about possible returns, stocks information and stock forecasts.<br/> <br/>
           </h2>
       </div>
 
