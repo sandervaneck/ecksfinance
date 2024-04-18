@@ -21,8 +21,6 @@ export const Box1: React.FC<Box1Props> = ({
   date,
   setDate,
   setStocks,
-  predictors,
-  setPredictors,
   setPrediction,
   predictedPrice,
   setPredictedPrice
