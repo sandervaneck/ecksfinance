@@ -1,9 +1,8 @@
-import { RandomForestRegression as RFRegression } from 'ml-random-forest';
+import { SVR } from 'svm';
 import { StockData } from '../../../stocks/types';
 import { Dayjs } from 'dayjs';
-import { calculateVolatility } from './functions';
 
-export const rfCalc = (
+export const svcCalc = (
   data: StockData[],
   predictionDate: Dayjs
 ): StockData[] => {
@@ -17,20 +16,16 @@ export const rfCalc = (
   ]);
   const predictions: number[] = dataset.map(([_, price]) => price);
 
-  // Define options for random forest regression
-  const options = {
-    seed: 3,
-    maxFeatures: 1,
-    replacement: false,
-    nEstimators: 200
-  };
-
-  // Initialize random forest regression
-  const regression = new RFRegression(options);
+  // Initialize Support Vector Machine regression
+  const regression = new SVR({
+    kernel: 'rbf', // Radial Basis Function kernel
+    C: 1, // Regularization parameter
+    epsilon: 0.1 // Epsilon parameter in the epsilon-SVR model
+  });
 
   // Train the regression model
   try {
-    regression.train(trainingSet, predictions);
+    regression.fit(trainingSet, predictions);
   } catch (error) {
     console.error('Error during training:', error);
     return []; // Return empty array if training fails
@@ -38,8 +33,17 @@ export const rfCalc = (
 
   // Predict using the trained model
   const result: StockData[] = [];
-  regression.predict(trainingSet).forEach((price, i) => {
-    result.push({ date: new Date(trainingSet[i][0]), price });
+  trainingSet.forEach(([date, previousPrice]) => {
+    const predictedPrice = regression.predict([[date, previousPrice]])[0];
+
+    // Construct the predicted result object for the current date
+    const predictedResult: StockData = {
+      date: new Date(date), // Create a new Date object for the current date
+      price: predictedPrice
+    };
+
+    // Add the predicted result to the prediction range array
+    result.push(predictedResult);
   });
 
   // Filter results to include only dates after the last date in the original data

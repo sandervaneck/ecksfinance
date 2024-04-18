@@ -1,8 +1,6 @@
-import { Box, Stack } from '@mui/material';
+import { Box} from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import dayjs, { Dayjs } from 'dayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { Dayjs } from 'dayjs';
 
 export interface SelectPredictionDateProps {
   date: Dayjs;

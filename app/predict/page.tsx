@@ -1,6 +1,6 @@
 'use client';
 
-import React, { use, useState } from 'react';
+import React, { useState } from 'react';
 import { Card } from '@tremor/react';
 import { Box, Grid, Stack } from '@mui/material';
 import { HeadBox } from '../sharedComponents/headbox';
@@ -9,7 +9,6 @@ import dayjs, { Dayjs } from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { StockData, emptyStock } from '../stocks/types';
-import { Box3 } from '../stocks/components/box3';
 import { parseDefaultData } from '../stocks/components/box1/components/TotalInvestmentCard';
 import { Chart, DoubleChart } from '../stocks/components/box3/components/Chart';
 
@@ -22,11 +21,11 @@ const PredictPage = () => {
   const [stocks, setStocks] = useState([emptyStock]);
   const [ml, setml] = useState([emptyStock]);
   const [prediction, setPrediction] = useState<StockData[]>(ml);
-  const [predict, setPredict] = useState(false);
   const [predictedPrice, setPredictedPrice] = useState<number>(
     Number(stocks[stocks.length - 1].price.toFixed(2))
   );
   if (stocks.length === 1) parseDefaultData(setStocks);
+  const [predictors, setPredictors] = useState([{pred: "Random Forest", show: false, results: []}, {pred: "Gradient Regressor", show: false, results: []}, {pred: "Regressor", show: false, results: []}])
 
   return (
     <>
@@ -40,15 +39,14 @@ const PredictPage = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <Box1
-                    setPredict={() => setPredict(true)}
                     stocks={stocks}
                     setStocks={setStocks}
                     item={item}
                     setItem={setItem}
                     date={date}
                     setDate={setDate}
-                    setMl={setml}
-                    ml={ml}
+                    setPredictors={setPredictors}
+                    predictors={predictors}
                     prediction={prediction}
                     setPrediction={(s) => {
                       setPrediction(s);
@@ -59,9 +57,9 @@ const PredictPage = () => {
                 </Grid>
                 <Stack direction="row" spacing={1}>
                   <Chart data={stocks} title="Historic Stock Prices" />
-                  {prediction !== ml && predictedPrice !== 0 ? (
+                  {prediction !== predictors.filter(p => p.pred === "Random Forest")[0] && predictedPrice !== 0 ? (
                     <DoubleChart
-                      data={ml
+                      data={predictors.filter(p => p.pred === "Random Forest")[0].results
                         .map((s, i) => {
                           const found = prediction.find(
                             (p) =>

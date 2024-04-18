@@ -1,26 +1,28 @@
-import { Grid, Card, TextField } from '@mui/material';
-import React, { useState } from 'react';
+import { Grid, Card, Checkbox, Box } from '@mui/material';
+import React from 'react';
 import { SelectTicker } from '../../../stocks/components/box1/components/SelectTicker';
 import { Box1Props } from '../../types';
 import { SelectPredictionDate } from './components/SelectPredictionDate';
-import { Button } from '@tremor/react';
-import { extrapolatePrediction, mlCalc } from '../box2/ML';
-import { StockData, emptyStock } from '../../../stocks/types';
+import { mlCalc } from '../box2/functions';
+import { StockData} from '../../../stocks/types';
 import * as XLSX from 'xlsx';
 import { getData } from '../../../stocks/components/box1/components/TotalInvestmentCard';
 import { PredictButton } from './components/PredictButton';
-import { Dayjs } from 'dayjs';
 import { OwnPrediction } from './components/OwnPrediction';
+import { extrapolatePrediction } from '../box2/functions';
+import { svcCalc } from '../box2/SVC';
 
 export const Box1: React.FC<Box1Props> = ({
+  predictors, 
+  setPredictors,
   item,
   setItem,
   stocks,
-  setPredict,
   date,
   setDate,
   setStocks,
-  setMl,
+  predictors,
+  setPredictors,
   setPrediction,
   predictedPrice,
   setPredictedPrice
@@ -60,7 +62,7 @@ export const Box1: React.FC<Box1Props> = ({
       console.error('Error parsing stock data:', error);
     }
   };
-
+  
   return (
     <Card>
       <Grid container xs={12} spacing={2}>
@@ -97,67 +99,31 @@ export const Box1: React.FC<Box1Props> = ({
             {date !== null && (
               <PredictButton
                 onClick={() => {
-                  setMl(mlCalc(stocks, date));
-                  setPredict(true);
-                }}
-              />
+                 const toShow = predictors.filter(p => p.show).map(p => ({...p, results: mlCalc(p, stocks, date)}))
+                  const preds = predictors.map(p => ({
+                    ...p, results: p.show ? toShow.filter(z=> z.pred === p.pred)[0] : p.pred
+                  }))
+                  setPredictors(preds)
+                }}/>
             )}
           </Grid>
         </Grid>
+        <Grid xs={6} item>
+          Show the following ML predictors:
+          {predictors.map((pred, index) => (
+            <Box sx={{ml:1, mt: 1}}>
+            <Grid xs={2}><Checkbox checked={pred.show} onCheck={(e) => {
+              const old = [...predictors]
+              old[index] = {
+                ...old[index],
+                show: e.target.checked
+              }
+              setPredictors(old)
+            }}/></Grid>
+            </Box>
+          ))}
+        </Grid>
       </Grid>
     </Card>
-  );
-};
-
-interface FirstGridProps {
-  item: string;
-  setItem: (e: string) => void;
-  date: Dayjs;
-  setDate: (e: Dayjs) => void;
-  stocks: StockData[];
-  setStocks: (e: StockData[]) => void;
-  ml: StockData[];
-  setMl: (e: StockData[]) => void;
-  parseData: () => void;
-  setChanged: (e: boolean) => void;
-}
-const FirstGrid: React.FC<FirstGridProps> = ({
-  item,
-  setItem,
-  date,
-  setDate,
-  stocks,
-  parseData,
-  setMl,
-  setChanged
-}) => {
-  return (
-    <Grid item xs={6}>
-      <Grid item xs={12}>
-        <SelectTicker
-          item={item}
-          setItem={(e) => {
-            setChanged(true);
-            setItem(e);
-            parseData();
-          }}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <SelectPredictionDate date={date} setDate={setDate} />
-      </Grid>
-
-      <Grid item xs={0.5}></Grid>
-      <Grid item xs={11.5}>
-        {date !== null && (
-          <PredictButton
-            onClick={() => {
-              setMl(mlCalc(stocks, date));
-              setChanged(true);
-            }}
-          />
-        )}
-      </Grid>
-    </Grid>
   );
 };
