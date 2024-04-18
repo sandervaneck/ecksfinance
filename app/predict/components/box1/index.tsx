@@ -10,7 +10,6 @@ import { getData } from '../../../stocks/components/box1/components/TotalInvestm
 import { PredictButton } from './components/PredictButton';
 import { OwnPrediction } from './components/OwnPrediction';
 import { extrapolatePrediction } from '../box2/functions';
-import { svcCalc } from '../box2/SVC';
 
 export const Box1: React.FC<Box1Props> = ({
   predictors, 

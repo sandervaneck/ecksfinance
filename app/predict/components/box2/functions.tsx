@@ -1,11 +1,13 @@
 import { StockData } from "../../../stocks/types";
+import { gbrCalc } from "./GBR";
 import { rfCalc } from "./ML";
-import { svcCalc } from "./SVC";
+import { svrCalc } from "./SVR";
 import { Dayjs } from 'dayjs';
 
 export const mlCalc = (pred: string, data: StockData[], predictionDate: Dayjs) => {
     if (pred === "Random Forest") return rfCalc(data, predictionDate)
-    if (pred === "SVC") return svcCalc(data, predictionDate)
+    if (pred === "SVR") return svrCalc(data, predictionDate)
+    if (pred === "Gradient Boosting") return gbrCalc(data, predictionDate)
 }
 
 export const extrapolatePrediction = (

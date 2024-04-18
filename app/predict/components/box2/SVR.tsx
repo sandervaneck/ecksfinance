@@ -2,7 +2,7 @@ import { SVR } from 'svm';
 import { StockData } from '../../../stocks/types';
 import { Dayjs } from 'dayjs';
 
-export const svcCalc = (
+export const svrCalc = (
   data: StockData[],
   predictionDate: Dayjs
 ): StockData[] => {

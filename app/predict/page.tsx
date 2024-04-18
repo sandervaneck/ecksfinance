@@ -25,7 +25,7 @@ const PredictPage = () => {
     Number(stocks[stocks.length - 1].price.toFixed(2))
   );
   if (stocks.length === 1) parseDefaultData(setStocks);
-  const [predictors, setPredictors] = useState([{pred: "Random Forest", show: false, results: []}, {pred: "Gradient Regressor", show: false, results: []}, {pred: "Regressor", show: false, results: []}])
+  const [predictors, setPredictors] = useState([{pred: "Random Forest", show: false, results: []}, {pred: "Gradient Boosting", show: false, results: []}, {pred: "SVR", show: false, results: []}])
 
   return (
     <>
