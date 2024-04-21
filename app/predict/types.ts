@@ -10,13 +10,14 @@ export interface Box1Props {
   setStocks: (s: StockData[]) => void;
   predictors: Predictor[];
   prediction: StockData[];
+  setPrediction: (s: StockData[]) => void;
   setPredictors: (s: Predictor[]) => void;
   setPredictedPrice: (b: number) => void;
   predictedPrice: number;
 }
 
-type Predictor = {
+export type Predictor = {
   name: string;
   show: boolean;
   prediction: StockData[];
-}
+};

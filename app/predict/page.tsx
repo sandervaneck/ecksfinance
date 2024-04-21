@@ -11,12 +11,18 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { StockData, emptyStock } from '../stocks/types';
 import { parseDefaultData } from '../stocks/components/box1/components/TotalInvestmentCard';
 import { Chart, DoubleChart } from '../stocks/components/box3/components/Chart';
+import { Predictor } from './types';
 
+const startPredictors: Predictor[] = [
+  { name: 'Random Forest', show: false, prediction: [] },
+  { name: 'Gradient Boosting', show: false, prediction: [] },
+  { name: 'SVR', show: false, prediction: [] }
+];
 const PredictPage = () => {
   const title = 'Predict Stocks';
   const subtitle =
     'Can you beat a Machine Learning predictor, that only bases its prediction on passed prices?';
-  const [item, setItem] = useState('IBM');
+  const [item, setItem] = useState('S&P');
   const [date, setDate] = React.useState<Dayjs>(dayjs('2025-01-01'));
   const [stocks, setStocks] = useState([emptyStock]);
   const [ml, setml] = useState([emptyStock]);
@@ -25,8 +31,7 @@ const PredictPage = () => {
     Number(stocks[stocks.length - 1].price.toFixed(2))
   );
   if (stocks.length === 1) parseDefaultData(setStocks);
-  const [predictors, setPredictors] = useState([{pred: "Random Forest", show: false, results: []}, {pred: "Gradient Boosting", show: false, results: []}, {pred: "SVR", show: false, results: []}])
-
+  const [predictors, setPredictors] = useState(startPredictors);
   return (
     <>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -57,10 +62,14 @@ const PredictPage = () => {
                 </Grid>
                 <Stack direction="row" spacing={1}>
                   <Chart data={stocks} title="Historic Stock Prices" />
-                  {prediction !== predictors.filter(p => p.pred === "Random Forest")[0] && predictedPrice !== 0 ? (
+
+                  {prediction !==
+                    predictors.filter((p) => p.name === 'Random Forest')[0]
+                      .prediction && predictedPrice !== 0 ? (
                     <DoubleChart
-                      data={predictors.filter(p => p.pred === "Random Forest")[0].results
-                        .map((s, i) => {
+                      data={predictors
+                        .filter((p) => p.name === 'Random Forest')[0]
+                        .prediction.map((s, i) => {
                           const found = prediction.find(
                             (p) =>
                               p.date.getDate() === s.date.getDate() &&

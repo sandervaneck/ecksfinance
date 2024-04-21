@@ -15,7 +15,6 @@ export const Box1 = () => {
   const [questions, setQuestions] = useState<QuestionForm>(questions1);
   const [bonusQ, setBonusQ] = useState<BonusQuestion>(bonusQuestion);
   const [scoreForm, setScores] = useState<Score[]>(scores);
-  console.log(bonusQ);
   return (
     <Card>
       <Grid container>

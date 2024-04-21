@@ -2,6 +2,7 @@ import { Stack, Card, Grid, Button, Box } from '@mui/material';
 import { InvestmentData, Stock, StockData } from '../../../types';
 import { useEffect, useState } from 'react';
 import * as XLSX from 'xlsx';
+import { parseData } from '../../../../sharedComponents/functions';
 
 interface TotalCardProps {
   stocks: Stock[];
@@ -15,14 +16,14 @@ interface TotalCardProps {
 export const getData = (item: string): string => {
   let result;
   switch (true) {
-    case item === 'BTC':
-      result = '/btc.xlsx';
+    case item === 'S&P':
+      result = '/SP.xlsx';
       break;
-    case item === 'GSP':
-      result = '/gsp.xlsx';
+    case item === 'ACWI':
+      result = '/ACWI.xlsx';
       break;
     default:
-      result = '/stocks.xlsx';
+      result = '/AEX.xlsx';
   }
 
   return result;
@@ -42,42 +43,6 @@ export const TotalCard: React.FC<TotalCardProps> = ({
     null
   );
 
-  const parseData = async () => {
-    try {
-      const path = getData(item);
-      const response = await fetch(path);
-      const blob = await response.blob();
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const data =
-          event.target && new Uint8Array(event.target.result as ArrayBuffer);
-        const workbook = XLSX.read(data, { type: 'array' });
-        const sheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[sheetName];
-        const rows: any[] = XLSX.utils.sheet_to_json(worksheet, {
-          header: 1
-        });
-
-        const parsedStocks: StockData[] = [];
-        // Assuming your data starts from the second row (index 1)
-        for (let i = 1; i < rows.length; i++) {
-          const row = rows[i];
-          const dateParts = row[0].split('-').map(Number);
-          const date = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
-          const price = Number(row[4]);
-          parsedStocks.push({ date, price });
-        }
-        const sortedData = parsedStocks
-          .slice()
-          .sort((a, b) => a.date.getTime() - b.date.getTime());
-
-        setStocks(sortedData);
-      };
-      reader.readAsArrayBuffer(blob);
-    } catch (error) {
-      console.error('Error parsing stock data:', error);
-    }
-  };
   useEffect(() => {
     if (stocks.length > 1) {
       calculateTotalInvestmentValue();
@@ -130,7 +95,7 @@ export const TotalCard: React.FC<TotalCardProps> = ({
             variant="contained"
             onClick={() => {
               if (changed || stocks.length <= 1) {
-                parseData();
+                parseData(item, setStocks);
                 setChanged(!changed);
               }
               calculateTotalInvestmentValue();
@@ -189,9 +154,9 @@ export const parseDefaultData = async (setStocks: (s: StockData[]) => void) => {
       // Assuming your data starts from the second row (index 1)
       for (let i = 1; i < rows.length; i++) {
         const row = rows[i];
-        const dateParts = row[0].split('-').map(Number);
+        const dateParts = row[2].split('-').map(Number);
         const date = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
-        const price = Number(row[4]);
+        const price = Number(row[1]);
         parsedStocks.push({ date, price });
       }
       const sortedData = parsedStocks

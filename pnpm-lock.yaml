@@ -95,6 +95,9 @@ dependencies:
   server-only:
     specifier: ^0.0.1
     version: 0.0.1
+  svm:
+    specifier: ^0.1.1
+    version: 0.1.1
   tailwindcss:
     specifier: ^3.3.5
     version: 3.4.3
@@ -3896,6 +3899,10 @@ packages:
   /supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
+    dev: false
+
+  /svm@0.1.1:
+    resolution: {integrity: sha512-L3NulKDpCKQmMw+ml58mHGWEm0IbN3tVczqbNSNLYQDImL2Eb5whpxqRv2YLtCA6e1VDA/GLXwnVPcSymQUo2g==}
     dev: false
 
   /tabbable@6.2.0:

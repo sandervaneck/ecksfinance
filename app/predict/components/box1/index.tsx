@@ -4,15 +4,14 @@ import { SelectTicker } from '../../../stocks/components/box1/components/SelectT
 import { Box1Props } from '../../types';
 import { SelectPredictionDate } from './components/SelectPredictionDate';
 import { mlCalc } from '../box2/functions';
-import { StockData} from '../../../stocks/types';
-import * as XLSX from 'xlsx';
-import { getData } from '../../../stocks/components/box1/components/TotalInvestmentCard';
+import { StockData } from '../../../stocks/types';
 import { PredictButton } from './components/PredictButton';
 import { OwnPrediction } from './components/OwnPrediction';
 import { extrapolatePrediction } from '../box2/functions';
+import { parseData } from '../../../sharedComponents/functions';
 
 export const Box1: React.FC<Box1Props> = ({
-  predictors, 
+  predictors,
   setPredictors,
   item,
   setItem,
@@ -24,42 +23,6 @@ export const Box1: React.FC<Box1Props> = ({
   predictedPrice,
   setPredictedPrice
 }) => {
-  const parseData = async () => {
-    try {
-      const path = getData(item);
-      const response = await fetch(path);
-      const blob = await response.blob();
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const data =
-          event.target && new Uint8Array(event.target.result as ArrayBuffer);
-        const workbook = XLSX.read(data, { type: 'array' });
-        const sheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[sheetName];
-        const rows: any[] = XLSX.utils.sheet_to_json(worksheet, {
-          header: 1
-        });
-
-        const parsedStocks: StockData[] = [];
-        for (let i = 1; i < rows.length; i++) {
-          const row = rows[i];
-          const dateParts = row[0].split('-').map(Number);
-          const date = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
-          const price = Number(row[4]);
-          parsedStocks.push({ date, price });
-        }
-        const sortedData = parsedStocks
-          .slice()
-          .sort((a, b) => a.date.getTime() - b.date.getTime());
-
-        setStocks(sortedData);
-      };
-      reader.readAsArrayBuffer(blob);
-    } catch (error) {
-      console.error('Error parsing stock data:', error);
-    }
-  };
-  
   return (
     <Card>
       <Grid container xs={12} spacing={2}>
@@ -68,9 +31,8 @@ export const Box1: React.FC<Box1Props> = ({
             <SelectTicker
               item={item}
               setItem={(e) => {
-                // setChanged(true);
                 setItem(e);
-                parseData();
+                parseData(e, setStocks);
               }}
             />
           </Grid>
@@ -96,30 +58,72 @@ export const Box1: React.FC<Box1Props> = ({
             {date !== null && (
               <PredictButton
                 onClick={() => {
-                 const toShow = predictors.filter(p => p.show).map(p => ({...p, results: mlCalc(p, stocks, date)}))
-                  const preds = predictors.map(p => ({
-                    ...p, results: p.show ? toShow.filter(z=> z.pred === p.pred)[0] : p.pred
-                  }))
-                  setPredictors(preds)
-                }}/>
+                  // const toShow = predictors
+                  //   .filter((p) => p.show)
+                  //   .map((p) => ({
+                  //     ...p,
+                  //     results: mlCalc(p.name, stocks, date)
+                  //   }));
+                  // console.log(toShow);
+                  // const preds = predictors.map((p) => ({
+                  //   ...p,
+                  //   results: p.show
+                  //     ? toShow.filter((z) => z.name === p.name)[0]
+                  //     : p.name
+                  // }));
+                  // setPredictors(preds);
+                  if (
+                    stocks.length > 0 &&
+                    stocks
+                      .map((s) => s.date.toString())
+                      .includes('Invalid Date')
+                  )
+                    console.log(
+                      stocks.length > 0 &&
+                        stocks
+                          .map((s) => s.date.toString())
+                          .includes('Invalid Date')
+                    );
+                  parseData(item, setStocks);
+                  const result = mlCalc('Random Forest', stocks, date);
+                  const old = [...predictors];
+                  const index = old.map((i) => i.name).indexOf('Random Forest');
+                  old[index] = {
+                    ...old[index],
+                    prediction:
+                      result !== undefined ? result : old[index].prediction
+                  };
+                  setPredictors(old);
+                }}
+              />
             )}
           </Grid>
         </Grid>
-        <Grid xs={6} item>
+        {/* <Grid xs={6} item>
           Show the following ML predictors:
           {predictors.map((pred, index) => (
-            <Box sx={{ml:1, mt: 1}}>
-            <Grid xs={2}><Checkbox checked={pred.show} onCheck={(e) => {
-              const old = [...predictors]
-              old[index] = {
-                ...old[index],
-                show: e.target.checked
-              }
-              setPredictors(old)
-            }}/></Grid>
+            <Box sx={{ ml: 1, mt: 1 }}>
+              <Grid container xs={12}>
+                <Grid item xs={2}>
+                  <Checkbox
+                    checked={pred.show}
+                    onChange={(e) => {
+                      const old = [...predictors];
+                      old[index] = {
+                        ...old[index],
+                        show: e.target.checked
+                      };
+                      setPredictors(old);
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={10}>
+                  {pred.name}
+                </Grid>
+              </Grid>
             </Box>
           ))}
-        </Grid>
+        </Grid> */}
       </Grid>
     </Card>
   );

@@ -33,7 +33,7 @@ const StocksPage = () => {
   const title = 'Compound investing returns (dollar average investing)';
   const subtitle =
     'What would your returns have been in case you did dollar average investing in the followin tickers?';
-  const [item, setItem] = useState('IBM');
+  const [item, setItem] = useState('S&P');
   const [investmentData, setInvestmentData] =
     useState<InvestmentData>(startInvestmentData);
   const [stocks, setStocks] = useState<Stock[]>([emptyStock]);

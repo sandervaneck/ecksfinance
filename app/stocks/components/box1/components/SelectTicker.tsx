@@ -17,14 +17,14 @@ export const SelectTicker: React.FC<TickerProps> = ({ item, setItem }) => {
           value={item}
           onChange={(e: any) => setItem(e.target.value)}
         >
-          <MenuItem key="IBM" value="IBM">
-            IBM
+          <MenuItem key="S&P" value="S&P">
+            S&P500
           </MenuItem>
-          <MenuItem key="BTC" value="BTC">
-            Bitcoin
+          <MenuItem key="ACWI" value="ACWI">
+            All Country World Index
           </MenuItem>
-          <MenuItem key="GSP" value="GSP">
-            S&P 500
+          <MenuItem key="AEX" value="AEX">
+            AEX
           </MenuItem>
         </Select>
       </Stack>

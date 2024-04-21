@@ -1,7 +1,20 @@
 import { RandomForestRegression as RFRegression } from 'ml-random-forest';
 import { StockData } from '../../../stocks/types';
 import { Dayjs } from 'dayjs';
-import { calculateVolatility } from './functions';
+
+const calculateVolatility = (data: StockData[]): number => {
+  // Calculate daily returns
+  const returns = data
+    .slice(1)
+    .map((d, i) => (d.price - data[i].price) / data[i].price);
+
+  // Calculate standard deviation of returns as a proxy for volatility
+  const stdDev = Math.sqrt(
+    returns.reduce((sum, r) => sum + Math.pow(r, 2), 0) / returns.length
+  );
+
+  return stdDev;
+};
 
 export const rfCalc = (
   data: StockData[],
@@ -22,7 +35,7 @@ export const rfCalc = (
     seed: 3,
     maxFeatures: 1,
     replacement: false,
-    nEstimators: 200
+    nEstimators: 1000
   };
 
   // Initialize random forest regression
@@ -42,20 +55,25 @@ export const rfCalc = (
     result.push({ date: new Date(trainingSet[i][0]), price });
   });
 
-  // Filter results to include only dates after the last date in the original data
   const lastDate = data[data.length - 1].date;
+  const lastPrice = data[data.length - 1].price;
   const volatility = calculateVolatility(data);
 
-  // Iterate over each day from the next day after the last date to the prediction date
+  // Iterate over each day from the last date in data to the prediction date
+  let previousPrice = lastPrice; // Initialize previousPrice with the last known price
   for (
-    let date = new Date(lastDate.getTime() + 24 * 60 * 60 * 1000);
+    let date = new Date(lastDate.getTime());
     date <= predictionDate.toDate();
     date.setDate(date.getDate() + 1)
   ) {
-    const previousData = data.slice(-45); // Take the previous 45 days
-    const previousPrice = previousData[previousData.length - 1].price; // Price of the last day in previous data
+    // Calculate the time difference between the current date and the last date in days
+    const timeDifference =
+      (date.getTime() - lastDate.getTime()) / (24 * 60 * 60 * 1000);
 
+    // Extrapolate the price using the regression model and considering volatility
     const randomFactor = Math.random() * volatility * (2 - volatility); // Random factor based on volatility
+    const timeFactor = Math.min(timeDifference / 45, 1); // Limit timeFactor to 1 (45 days or less)
+    console.log(previousPrice);
     const predictedPrice =
       regression.predict([[date.getTime(), previousPrice]])[0] + randomFactor;
 
@@ -65,10 +83,12 @@ export const rfCalc = (
       price: predictedPrice
     };
 
-    // Add the predicted result to the prediction range array
+    // Add the predicted result to the result array
     result.push(predictedResult);
+
+    // Update previousPrice for the next iteration
+    previousPrice = predictedPrice;
   }
 
-  // Return the predicted result
-  return result.filter((r) => r.date >= lastDate);
+  return result;
 };

@@ -1,4 +1,4 @@
-import { Box} from '@mui/material';
+import { Box } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { Dayjs } from 'dayjs';
 
