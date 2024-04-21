@@ -1,5 +1,5 @@
 import { Title, Card, Text, LineChart } from '@tremor/react';
-import { Stock, StockData } from '../../../types';
+import { StockData } from '../../../types';
 import { CircularProgress } from '@mui/material';
 
 interface ChartProps {
