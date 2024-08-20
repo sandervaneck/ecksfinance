@@ -92,6 +92,7 @@ export const TotalCard: React.FC<TotalCardProps> = ({
       <Grid container xs={12}>
         <Grid item xs={4}>
           <Button
+            disabled={item === ''}
             variant="contained"
             onClick={() => {
               if (changed || stocks.length <= 1) {

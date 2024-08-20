@@ -1,62 +1,73 @@
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/9113740/201498864-2a900c64-d88f-4ed4-b5cf-770bcb57e1f5.png">
-  <source media="(prefers-color-scheme: light)" srcset="https://user-images.githubusercontent.com/9113740/201498152-b171abb8-9225-487a-821c-6ff49ee48579.png">
-  <img alt="Shows all of the tools in the stack for this template, also listed in the README file." src="https://user-images.githubusercontent.com/9113740/201498152-b171abb8-9225-487a-821c-6ff49ee48579.png">
-</picture>
+Certainly! Here's the README content you can copy and paste directly:
 
-<div align="center"><strong>Next.js 14 Admin Dashboard Template</strong></div>
-<div align="center">Built with the Next.js App Router</div>
-<br />
-<div align="center">
-<a href="http://admin-dash-template.vercel.sh/">Demo</a>
-<span> · </span>
-<a href="https://vercel.com/templates/next.js/admin-dashboard-tailwind-planetscale-react-nextjs">Clone & Deploy</a>
-<span>
-</div>
+---
 
-## Overview
+# EcksFinance
 
-This is a starter template using the following stack:
-
-- Framework - [Next.js 14](https://nextjs.org/14)
-- Language - [TypeScript](https://www.typescriptlang.org)
-- Auth - [NextAuth.js](https://next-auth.js.org)
-- Database - [Vercel Postgres](https://vercel.com/postgres)
-- Deployment - [Vercel](https://vercel.com/docs/concepts/next.js/overview)
-- Styling - [Tailwind CSS](https://tailwindcss.com)
-- Components - [Tremor](https://www.tremor.so)
-- Analytics - [Vercel Analytics](https://vercel.com/analytics)
-- Linting - [ESLint](https://eslint.org)
-- Formatting - [Prettier](https://prettier.io)
-
-This template uses the new Next.js App Router. This includes support for enhanced layouts, colocation of components, tests, and styles, component-level data fetching, and more.
+EcksFinance is a web application designed to help users analyze stock investments, learn about the stock market through quizzes, and make predictions about future stock returns.
 
 ## Getting Started
 
-During the deployment, Vercel will prompt you to create a new Postgres database. This will add the necessary environment variables to your project.
+To get started with the project, follow the instructions below:
 
-Inside the Vercel Postgres dashboard, create a table based on the schema defined in this repository.
+### Prerequisites
 
-```
-CREATE TABLE users (
-  id SERIAL PRIMARY KEY,
-  email VARCHAR(255) NOT NULL,
-  name VARCHAR(255),
-  username VARCHAR(255)
-);
+Make sure you have [pnpm](https://pnpm.io/) installed. If not, you can install it using npm:
+
+```bash
+npm install -g pnpm
 ```
 
-Insert a row for testing:
+### Installation
 
-```
-INSERT INTO users (id, email, name, username) VALUES (1, 'me@site.com', 'Me', 'username');
-```
+1. Clone the repository to your local machine.
+2. Navigate to the project directory.
+3. Install all dependencies using pnpm:
 
-Finally, run the following commands to start the development server:
-
-```
+```bash
 pnpm install
-pnpm dev
 ```
 
-You should now be able to access the application at http://localhost:3000.
+### Running the Development Server
+
+To start the development server and run the application on `localhost:3000`, use the following command:
+
+```bash
+pnpm run dev
+```
+
+## Features
+
+### 1. Welcoming Tab
+
+The application begins with a welcoming tab, providing an introduction to EcksFinance and guiding users on how to navigate the app.
+
+### 2. Stocks Tab
+
+In the Stocks tab, users can input their monthly investments from the past. By selecting one of the available tickers (AEX, S&P500, MSCI All Country World Index), they can calculate the total returns they would have accumulated up to the present day.
+
+### 3. Quiz Tab
+
+The Quiz tab allows users to test their knowledge on stock-related questions. After completing the quiz, users can see their calculated score and compare it to others' performances on the leaderboard. Note that the current leaderboard is hardcoded for demonstration purposes.
+
+### 4. Prediction Tab
+
+This tab enables users to predict future stock returns and compare their predictions against a machine learning bot's predictions. This feature is designed to help users understand the potential future outcomes based on various inputs.
+
+## Upcoming Features
+
+In the next release, the following improvements will be made:
+
+- **Persistent Leaderboard:** Quiz answers and predictions will be stored in a Vercel database, making the leaderboard meaningful and reflective of actual user performance.
+
+- **API connection to get most up to date stock data:** Instead of parsing Excel Data, let's call an api (form alphaStocks for instance) to get real-time stock data!
+
+Stay tuned for more updates and enhancements!
+
+---
+
+If you have any questions or encounter any issues, feel free to reach out or contribute to the project. Happy investing!
+
+---
+
+You can paste this text into your README file directly.

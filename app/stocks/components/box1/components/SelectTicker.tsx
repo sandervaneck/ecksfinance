@@ -1,4 +1,11 @@
-import { MenuItem, Select, Box, Stack } from '@mui/material';
+import {
+  MenuItem,
+  Select,
+  Box,
+  Stack,
+  FormHelperText,
+  FormControl
+} from '@mui/material';
 
 export interface TickerProps {
   item: string;
@@ -12,21 +19,31 @@ export const SelectTicker: React.FC<TickerProps> = ({ item, setItem }) => {
         <Box sx={{ mt: 4 }}>
           <Box sx={{ mt: 1 }}>Select ticker to invest in:</Box>
         </Box>
-        <Select
-          size="small"
-          value={item}
-          onChange={(e: any) => setItem(e.target.value)}
-        >
-          <MenuItem key="S&P" value="S&P">
-            S&P500
-          </MenuItem>
-          <MenuItem key="ACWI" value="ACWI">
-            All Country World Index
-          </MenuItem>
-          <MenuItem key="AEX" value="AEX">
-            AEX
-          </MenuItem>
-        </Select>
+        <FormControl required error={item === ''} size="small" sx={{ mt: 1 }}>
+          <Select
+            value={item}
+            onChange={(e: any) => setItem(e.target.value)}
+            displayEmpty
+          >
+            <MenuItem value="" disabled>
+              Select a ticker
+            </MenuItem>
+            <MenuItem key="S&P" value="S&P">
+              S&P500
+            </MenuItem>
+            <MenuItem key="ACWI" value="ACWI">
+              All Country World Index
+            </MenuItem>
+            <MenuItem key="AEX" value="AEX">
+              AEX
+            </MenuItem>
+          </Select>
+          {item === '' && (
+            <FormHelperText>
+              Cannot calculate before you have selected a ticker
+            </FormHelperText>
+          )}
+        </FormControl>
       </Stack>
     </Box>
   );
